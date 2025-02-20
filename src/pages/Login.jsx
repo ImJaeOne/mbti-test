@@ -28,7 +28,6 @@ const Login = () => {
     try {
       const result = await authLogin(inputData);
       if (result) {
-        console.log("로그인 성공:", result);
         const { accessToken, avatar, nickname } = result;
         setUser({ avatar, nickname });
         setAccessToken({ accessToken });
