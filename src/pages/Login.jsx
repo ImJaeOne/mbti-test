@@ -14,10 +14,9 @@ const Login = () => {
         <SignInput type="password" placeholder="비밀번호" />
         <CommonBtn text="로그인" />
       </SignInputWrapper>
-      <div>
+      <div className="flex gap-2">
         계정이 없으신가요?
         <Link to="/signup" className="text-red-300">
-          {" "}
           회원가입
         </Link>
       </div>
