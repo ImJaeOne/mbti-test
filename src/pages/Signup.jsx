@@ -24,15 +24,12 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    authRegister(inputData);
     try {
       const result = await authRegister(inputData);
       if (result) {
         console.log("회원가입 완료:", result.message);
-        // alert('회원 가입이 완료되었습니다. 로그인 페이지로 이동합니다.')
-        // navigate('/login');
-      } else {
-        console.error("회원가입 처리 실패");
+        alert("회원 가입이 완료되었습니다. 로그인 페이지로 이동합니다.");
+        navigate("/login");
       }
     } catch (error) {
       console.error("회원가입 실패:", error);
