@@ -40,7 +40,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <Link to="/test" className="text-white py-2 px-3   bg-red-300 rounded-xl">
+      <Link to="/test" className="text-white py-2 px-3 bg-red-300 rounded-xl">
         내 성격 알아보러 가기
       </Link>
     </div>
