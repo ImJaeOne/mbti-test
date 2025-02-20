@@ -15,6 +15,7 @@ export const authLogin = async (userData) => {
   try {
     const response = await authAxios.post("/login", userData);
     console.log("로그인 성공:", response);
+    localStorage.setItem("accessToken", response.data.accessToken);
     return response.data;
   } catch (error) {
     console.error("로그인 실패:", error.response.data.message);

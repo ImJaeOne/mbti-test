@@ -5,8 +5,10 @@ import SignInputWrapper from "../components/Sign/SignInputWrapper";
 import CommonBtn from "../components/common/CommonBtn";
 import { Link, useNavigate } from "react-router-dom";
 import { authLogin } from "../api/auth";
+import useAuthStore from "../zustand/authStore";
 
 const Login = () => {
+  const { setUser, setAccessToken } = useAuthStore((state) => state);
   const navigate = useNavigate();
   const [inputData, setInputData] = useState({
     id: "",
@@ -26,7 +28,10 @@ const Login = () => {
     try {
       const result = await authLogin(inputData);
       if (result) {
-        console.log("로그인 성공:", result.message);
+        console.log("로그인 성공:", result);
+        const { accessToken, avatar, nickname } = result;
+        setUser({ avatar, nickname });
+        setAccessToken({ accessToken });
         alert("로그인이 완료되었습니다. 홈 페이지로 이동합니다.");
         navigate("/");
       }
