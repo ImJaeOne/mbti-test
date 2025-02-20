@@ -64,7 +64,10 @@ const Signup = () => {
       </SignInputWrapper>
       <div className="flex gap-2">
         이미 계정이 있으신가요?
-        <Link to="/login" className="text-red-300">
+        <Link
+          to="/login"
+          className="text-red-300 hover:text-red-400 transition-colors"
+        >
           로그인
         </Link>
       </div>
