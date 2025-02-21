@@ -8,7 +8,9 @@ import { authLogin } from "../api/auth";
 import useAuthStore from "../zustand/authStore";
 
 const Login = () => {
-  const { setUser, setAccessToken } = useAuthStore((state) => state);
+  const { setUser, setAccessToken, setExpiresInTime } = useAuthStore(
+    (state) => state
+  );
   const navigate = useNavigate();
   const [inputData, setInputData] = useState({
     id: "",
@@ -26,11 +28,12 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const result = await authLogin(inputData);
+      const { result, expiresInSec } = await authLogin(inputData);
       if (result) {
-        const { accessToken, avatar, nickname } = result;
-        setUser({ avatar, nickname });
-        setAccessToken({ accessToken });
+        const { accessToken, avatar, nickname, userId } = result;
+        setUser({ avatar, nickname, userId });
+        setAccessToken(accessToken);
+        setExpiresInTime(expiresInSec);
         alert("로그인이 완료되었습니다. 홈 페이지로 이동합니다.");
         navigate("/");
       }
@@ -62,7 +65,10 @@ const Login = () => {
       </SignInputWrapper>
       <div className="flex gap-2">
         계정이 없으신가요?
-        <Link to="/signup" className="text-red-300 hover:text-red-400 transition-colors">
+        <Link
+          to="/signup"
+          className="text-red-300 hover:text-red-400 transition-colors"
+        >
           회원가입
         </Link>
       </div>
