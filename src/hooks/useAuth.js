@@ -3,7 +3,7 @@ import useAuthStore from "../zustand/authStore";
 import { authValidation } from "../api/auth";
 
 const useAuth = () => {
-  const { accessToken, setUser, logout } = useAuthStore((state) => state);
+  const { accessToken, expiresInTime, logout } = useAuthStore((state) => state);
 
   const { data: user, error } = useQuery({
     queryKey: ["user"],
@@ -17,8 +17,8 @@ const useAuth = () => {
         return null;
       }
     },
-    staleTime: 1000 * 30,
-    refetchInterval: 30000,
+    staleTime: 1000 * expiresInTime,
+    refetchInterval: 1000 * expiresInTime,
     retry: 1,
     enabled: !!accessToken, // 액세스 토큰이 존재할 때만 시도
   });
