@@ -35,7 +35,6 @@ export const authValidation = async (accessToken) => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("토큰 만료:", error.response.data.message);
