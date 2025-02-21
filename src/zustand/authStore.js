@@ -7,10 +7,12 @@ const useAuthStore = create(
     immer((set) => ({
       user: null,
       accessToken: null,
+      expiresInTime: null,
       setUser: (user) => set({ user }),
-      setAccessToken: (accessToken) => set({accessToken}),
+      setAccessToken: (accessToken) => set({ accessToken }),
+      setExpiresInTime: (expiresInTime) => set({ expiresInTime }),
       logout: () => {
-        set({ user: null, accessToken: null });
+        set({ user: null, accessToken: null, expiresInTime: null });
         localStorage.removeItem("accessToken");
       },
     })),

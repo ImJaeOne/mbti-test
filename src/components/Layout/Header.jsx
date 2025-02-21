@@ -1,8 +1,37 @@
 import { Link } from "react-router-dom";
 import useAuthStore from "../../zustand/authStore";
+import { useEffect, useState } from "react";
 
 const Header = () => {
-  const { accessToken, logout } = useAuthStore((state) => state);
+  const { accessToken, user, expiresInTime, logout } = useAuthStore(
+    (state) => state
+  );
+
+  const [expiresIn, setExpiresIn] = useState(expiresInTime ?? 0);
+
+  useEffect(() => {
+    if (expiresInTime) {
+      setExpiresIn(expiresInTime);
+    }
+  }, [expiresInTime]);
+
+  useEffect(() => {
+    if (!accessToken || !expiresIn) return;
+
+    const interval = setInterval(() => {
+      setExpiresIn((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [accessToken, expiresIn]);
+
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${String(minutes).padStart(2, "0")}:${String(
+      remainingSeconds
+    ).padStart(2, "0")}`;
+  };
 
   const handleLogout = () => {
     logout();
@@ -17,6 +46,8 @@ const Header = () => {
       <div className="flex gap-3 items-center">
         {accessToken ? (
           <>
+            <span className="text-sm">{formatTime(expiresIn)}</span>
+            <span className="text-sm">{user.nickname}님</span>
             <Link to="/profile">프로필</Link>
             <Link to="/test">테스트</Link>
             <Link to="/result">결과보기</Link>
