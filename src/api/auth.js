@@ -11,7 +11,7 @@ export const authRegister = async (userData) => {
   }
 };
 
-const expiresInSec = 30;
+const expiresInSec = 30 * 60;
 
 export const authLogin = async (userData) => {
   try {
@@ -19,8 +19,6 @@ export const authLogin = async (userData) => {
       `/login?expiresIn=${expiresInSec}s`,
       userData
     );
-    console.log(response);
-    localStorage.setItem("accessToken", response.data.accessToken);
     return { result: response.data, expiresInSec };
   } catch (error) {
     console.error(error);
@@ -40,8 +38,26 @@ export const authValidation = async (accessToken) => {
     console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error(error);
     console.error("토큰 만료:", error.response.data.message);
+    throw error;
+  }
+};
+
+export const updateProfile = async ({ file, nickname, accessToken }) => {
+  const formData = new FormData();
+  formData.append("avatar", file);
+  formData.append("nickname", nickname);
+
+  try {
+    const response = await authAxios.patch("/profile", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("업데이트 실패:", error);
     throw error;
   }
 };
