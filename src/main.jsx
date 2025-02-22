@@ -14,7 +14,6 @@ const loadKakaoSDK = () => {
   script.onload = () => {
     if (window.Kakao) {
       window.Kakao.init(kakaoApiKey);
-      console.log("카카오 SDK 초기화:", window.Kakao.isInitialized()); // true 확인
     }
   };
   document.head.appendChild(script);
