@@ -11,7 +11,7 @@ export const authRegister = async (userData) => {
   }
 };
 
-const expiresInSec = 60 * 30;
+const expiresInSec = 1 * 10;
 
 export const authLogin = async (userData) => {
   try {

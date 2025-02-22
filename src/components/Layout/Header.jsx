@@ -1,45 +1,12 @@
 import { Link } from "react-router-dom";
 import useAuthStore from "../../zustand/authStore";
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
+import ExpireTimer from "./ExpireTimer";
 
 const Header = () => {
-  const { accessToken, user, expiresInTime, setExpiresInTime, logout } =
-    useAuthStore((state) => state);
-  const [expiresIn, setExpiresIn] = useState(expiresInTime);
+  const { accessToken, user, logout } = useAuthStore((state) => state);
   const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    if (!expiresIn) {
-      setExpiresIn(expiresInTime);
-    }
-
-    const interval = setInterval(() => {
-      setExpiresIn((prev) => {
-        if (prev <= 0) {
-          clearInterval(interval);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [accessToken]);
-
-  useEffect(() => {
-    if (expiresIn !== expiresInTime) {
-      setExpiresInTime(expiresIn);
-    }
-  }, [expiresIn]);
-
-  const formatTime = (seconds) => {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${String(minutes).padStart(2, "0")}:${String(
-      remainingSeconds
-    ).padStart(2, "0")}`;
-  };
 
   const handleLogout = () => {
     logout();
@@ -63,9 +30,7 @@ const Header = () => {
       >
         {accessToken ? (
           <>
-            <span className="text-sm hidden md:block">
-              {formatTime(expiresIn)}
-            </span>
+            <ExpireTimer />
             <span className="text-sm hidden md:block">{user.nickname}님</span>
             <Link to="/profile" className="p-2 hover:text-red-400 md:p-0">
               프로필
@@ -96,4 +61,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default React.memo(Header);
