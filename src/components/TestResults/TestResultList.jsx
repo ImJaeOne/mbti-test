@@ -28,8 +28,7 @@ const TestResultList = () => {
       <div className="w-[80%] flex flex-col gap-6">
         {results?.map((result) => (
           <TestResultItem
-            key={result.id}
-            user={user}
+            isOwner={user.userId === result.userId}
             result={result}
             handleToggle={handleToggle}
             handleDelete={handleDelete}

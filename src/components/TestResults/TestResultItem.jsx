@@ -1,8 +1,7 @@
 import React from "react";
 import { mbtiDescriptions } from "../../utils/mbtiCalculator";
 
-const TestResultItem = ({ user, result, handleToggle, handleDelete }) => {
-    const isOwner = user.userId = result.userId;
+const TestResultItem = ({ isOwner, result, handleToggle, handleDelete }) => {
   return (
     <div
       key={result.userId}
