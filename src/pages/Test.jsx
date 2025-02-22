@@ -1,35 +1,16 @@
-import React, { useState } from "react";
 import TestForm from "../components/Test/TestForm";
 import { calculateMBTI, mbtiDescriptions } from "../utils/mbtiCalculator";
-import { createTestResult, getTestResults } from "../api/test";
+import { createTestResult } from "../api/test";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../zustand/authStore";
-import { useQuery } from "@tanstack/react-query";
+import {useTestResult} from "../hooks/useTest";
 
 const Test = () => {
   const navigate = useNavigate();
-  const [result, setResult] = useState({
-    mbti: "",
-    nickname: "",
-  });
   const { user } = useAuthStore();
 
-  const { data, error } = useQuery({
-    queryKey: ["testResults"],
-    queryFn: async () => {
-      try {
-        const testResults = await getTestResults();
-        const existTestResult = testResults.find(
-          (result) => result.userId === user.userId
-        );
-        return existTestResult;
-      } catch (error) {
-        console.error("테스트 결과 불러오는데 문제가 발생했습니다.", error);
-      }
-    },
-  });
+  const { data, error } = useTestResult(user.userId);
 
-  console.log(data);
   const handleTestSubmit = async (answers) => {
     const mbtiResult = calculateMBTI(answers);
     await createTestResult({
@@ -57,7 +38,7 @@ const Test = () => {
         ) : (
           <>
             <h1 className="text-3xl font-bold text-primary-color mb-6">
-              테스트 결과: {data.mbti}
+              {data.nickname}님의 테스트 결과는 {data.mbti}
             </h1>
             <p className="text-lg text-gray-700 mb-6">
               {mbtiDescriptions[data.mbti] ||
