@@ -31,8 +31,8 @@ const Test = () => {
   };
 
   return (
-    <div className="w-full flex flex-col items-center justify-center bg-white">
-      <div className="bg-white rounded-lg p-8 max-w-lg w-full h-full overflow-y-auto">
+    <div className="w-full flex flex-col items-center justify-center">
+      <div className="bg-white rounded-lg p-8 w-[80%] h-full overflow-y-auto">
         {!data ? (
           <>
             <h1 className="text-3xl font-bold text-primary-color mb-6">

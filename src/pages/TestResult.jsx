@@ -24,7 +24,7 @@ const TestResult = () => {
   const results = data?.filter((result) => result.visibility === true);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center pt-10">
+    <div className=" bg-gray-50 flex flex-col justify-center items-center">
       <div className="w-[80%] flex flex-col gap-6">
         {results?.map((result) => (
           <div
