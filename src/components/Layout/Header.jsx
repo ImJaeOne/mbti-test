@@ -4,28 +4,30 @@ import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 
 const Header = () => {
-  const { accessToken, user, expiresInTime, logout } = useAuthStore(
-    (state) => state
-  );
-
-  const [expiresIn, setExpiresIn] = useState(expiresInTime ?? 0);
+  const { accessToken, user, expiresInTime, setExpiresInTime, logout } =
+    useAuthStore((state) => state);
+  const [expiresIn, setExpiresIn] = useState(expiresInTime);
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    if (expiresInTime) {
-      setExpiresIn(expiresInTime);
-    }
-  }, [expiresInTime]);
-
-  useEffect(() => {
-    if (!accessToken || !expiresIn) return;
+    if (!accessToken || expiresIn <= 0) return;
 
     const interval = setInterval(() => {
-      setExpiresIn((prev) => (prev > 0 ? prev - 1 : 0));
+      setExpiresIn((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          return 0;
+        }
+        return prev - 1;
+      });
     }, 1000);
 
     return () => clearInterval(interval);
   }, [accessToken, expiresIn]);
+
+  useEffect(() => {
+    setExpiresIn(expiresInTime);
+  }, [expiresInTime]);
 
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
