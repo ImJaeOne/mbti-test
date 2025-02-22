@@ -2,7 +2,12 @@ import TestForm from "../components/Test/TestForm";
 import { calculateMBTI, mbtiDescriptions } from "../utils/mbtiCalculator";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../zustand/authStore";
-import { useCreateTestResult, useTestResult, useToggleTestResult } from "../hooks/useTest";
+import {
+  useCreateTestResult,
+  useDeleteTestResult,
+  useTestResult,
+  useToggleTestResult,
+} from "../hooks/useTest";
 
 const Test = () => {
   const navigate = useNavigate();
@@ -10,6 +15,7 @@ const Test = () => {
   const { data, error } = useTestResult(user.userId);
   const createTestMutation = useCreateTestResult();
   const updateTestMutation = useToggleTestResult();
+  const deleteTestMutation = useDeleteTestResult();
 
   const handleTestSubmit = async (answers) => {
     const mbtiResult = calculateMBTI(answers);
@@ -29,6 +35,10 @@ const Test = () => {
 
   const handleToggle = (id, visibility) => {
     updateTestMutation.mutate({ id, visibility });
+  };
+
+  const handleDelete = (id) => {
+    deleteTestMutation.mutate(id);
   };
 
   const handleNavigateToResults = () => {
