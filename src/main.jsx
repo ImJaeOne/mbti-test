@@ -5,6 +5,23 @@ import App from "./App.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
+const kakaoApiKey = import.meta.env.VITE_KAKAO_JAVASCRIPT_KEY;
+
+const loadKakaoSDK = () => {
+  const script = document.createElement("script");
+  script.src = "https://developers.kakao.com/sdk/js/kakao.js";
+  script.async = true;
+  script.onload = () => {
+    if (window.Kakao) {
+      window.Kakao.init(kakaoApiKey);
+      console.log("카카오 SDK 초기화:", window.Kakao.isInitialized()); // true 확인
+    }
+  };
+  document.head.appendChild(script);
+};
+
+loadKakaoSDK();
+
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
