@@ -3,10 +3,7 @@ import { mbtiDescriptions } from "../../utils/mbtiCalculator";
 
 const TestResultItem = ({ isOwner, result, handleToggle, handleDelete }) => {
   return (
-    <div
-      key={result.userId}
-      className="bg-white rounded-xl shadow-lg p-8 border border-gray-200"
-    >
+    <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-200">
       <div className="flex justify-between items-center mb-4">
         <span className="text-2xl font-bold text-red-500">
           {result.nickname}
