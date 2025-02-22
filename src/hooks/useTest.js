@@ -4,6 +4,7 @@ import {
   deleteTestResult,
   getTestResults,
   updateTestResultVisibility,
+  updateProfileTestUser,
 } from "../api/test";
 
 export const useTestResult = (userId) => {
@@ -64,6 +65,17 @@ export const useDeleteTestResult = () => {
 
   return useMutation({
     mutationFn: deleteTestResult,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["testResults"]);
+    },
+  });
+};
+
+export const useUpdateProfileTestUser = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: updateProfileTestUser,
     onSuccess: () => {
       queryClient.invalidateQueries(["testResults"]);
     },
