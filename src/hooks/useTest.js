@@ -1,5 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createTestResult, getTestResults, updateTestResultVisibility } from "../api/test";
+import {
+  createTestResult,
+  deleteTestResult,
+  getTestResults,
+  updateTestResultVisibility,
+} from "../api/test";
 
 export const useTestResult = (userId) => {
   return useQuery({
@@ -44,12 +49,23 @@ export const useCreateTestResult = () => {
 };
 
 export const useToggleTestResult = () => {
-    const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
-    return useMutation({
-      mutationFn: updateTestResultVisibility,
-      onSuccess: () => {
-        queryClient.invalidateQueries(["testResults"]);
-      },
-    });
-}
+  return useMutation({
+    mutationFn: updateTestResultVisibility,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["testResults"]);
+    },
+  });
+};
+
+export const useDeleteTestResult = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: deleteTestResult,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["testResults"]);
+    },
+  });
+};

@@ -1,15 +1,24 @@
 import React from "react";
-import { useTestResults, useToggleTestResult } from "../hooks/useTest";
+import {
+  useDeleteTestResult,
+  useTestResults,
+  useToggleTestResult,
+} from "../hooks/useTest";
 import { mbtiDescriptions } from "../utils/mbtiCalculator";
 import useAuthStore from "../zustand/authStore";
 
 const TestResult = () => {
   const { user } = useAuthStore();
-  const { data , error } = useTestResults();
+  const { data, error } = useTestResults();
   const updateTestMutation = useToggleTestResult();
+  const deleteTestMutation = useDeleteTestResult();
 
   const handleToggle = (id, visibility) => {
     updateTestMutation.mutate({ id, visibility });
+  };
+
+  const handleDelete = (id) => {
+    deleteTestMutation.mutate(id);
   };
 
   const results = data?.filter((result) => result.visibility === true);
@@ -30,13 +39,14 @@ const TestResult = () => {
                 <div className="flex gap-2">
                   <button
                     className="px-3 py-1 text-sm bg-gray-200 rounded-md hover:bg-gray-300 transition"
-                    onClick={() =>
-                      handleToggle(result.id, result.visibility)
-                    }
+                    onClick={() => handleToggle(result.id, result.visibility)}
                   >
                     비공개로 전환
                   </button>
-                  <button className="px-3 py-1 text-sm bg-red-500 text-white rounded-md hover:bg-red-600 transition">
+                  <button
+                    className="px-3 py-1 text-sm bg-red-500 text-white rounded-md hover:bg-red-600 transition"
+                    onClick={() => handleDelete(result.id)}
+                  >
                     삭제
                   </button>
                 </div>
