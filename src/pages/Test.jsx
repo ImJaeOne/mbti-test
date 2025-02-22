@@ -45,6 +45,40 @@ const Test = () => {
     navigate("/result");
   };
 
+  const handleShare = () => {
+    if (!window.Kakao) {
+      console.error("Kakao SDK가 로드되지 않았습니다.");
+      return;
+    }
+
+    if (!window.Kakao.isInitialized()) {
+      console.error("Kakao SDK가 초기화되지 않았습니다.");
+      return;
+    }
+
+    window.Kakao.Share.sendDefault({
+      objectType: "feed",
+      content: {
+        title: data.result,
+        description: mbtiDescriptions[data.result],
+        imageUrl: user.avatar || "https://via.placeholder.com/300",
+        link: {
+          mobileWebUrl: import.meta.env.VITE_MBTI_URL,
+          webUrl: import.meta.env.VITE_MBTI_URL,
+        },
+      },
+      buttons: [
+        {
+          title: "웹으로 보기",
+          link: {
+            mobileWebUrl: import.meta.env.VITE_MBTI_URL,
+            webUrl: import.meta.env.VITE_MBTI_URL,
+          },
+        },
+      ],
+    });
+  };
+
   return (
     <div className="w-full flex flex-col items-center justify-center">
       <div className="bg-white rounded-lg p-8 w-[80%] h-full overflow-y-auto">
@@ -78,6 +112,7 @@ const Test = () => {
                   >
                     삭제
                   </button>
+                  <button onClick={handleShare}>카카오톡 공유하기</button>
                 </div>
               </div>
               <h1 className="flex justify-between text-2xl font-bold text-gray-800">
