@@ -1,24 +1,29 @@
 import TestForm from "../components/Test/TestForm";
 import { calculateMBTI, mbtiDescriptions } from "../utils/mbtiCalculator";
-import { createTestResult } from "../api/test";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../zustand/authStore";
-import {useTestResult} from "../hooks/useTest";
+import { useCreateTestResult, useTestResult } from "../hooks/useTest";
 
 const Test = () => {
   const navigate = useNavigate();
   const { user } = useAuthStore();
-
   const { data, error } = useTestResult(user.userId);
+  const createTestMutation = useCreateTestResult();
 
   const handleTestSubmit = async (answers) => {
     const mbtiResult = calculateMBTI(answers);
-    await createTestResult({
-      userId: user.userId,
-      nickname: user.nickname,
-      mbti: mbtiResult,
-    });
-    navigate("/result");
+    createTestMutation.mutate(
+      {
+        userId: user.userId,
+        nickname: user.nickname,
+        mbti: mbtiResult,
+      },
+      {
+        onSuccess: () => {
+          navigate("/result");
+        },
+      }
+    );
   };
 
   const handleNavigateToResults = () => {
@@ -38,10 +43,10 @@ const Test = () => {
         ) : (
           <>
             <h1 className="text-3xl font-bold text-primary-color mb-6">
-              {data.nickname}님의 테스트 결과는 {data.mbti}
+              {data.nickname}님의 테스트 결과는 {data.result}
             </h1>
             <p className="text-lg text-gray-700 mb-6">
-              {mbtiDescriptions[data.mbti] ||
+              {mbtiDescriptions[data.result] ||
                 "해당 성격 유형에 대한 설명이 없습니다."}
             </p>
             <button
