@@ -43,7 +43,7 @@ export const calculateMBTI = (answers) => {
       scores[option[1]]++;
     }
   });
-  console.log(scores);
+
   // 각 점수 비교를 통해 최종 MBTI 유형 계산
   const result = `${scores.E >= scores.I ? "E" : "I"}${
     scores.S >= scores.N ? "S" : "N"
@@ -51,12 +51,3 @@ export const calculateMBTI = (answers) => {
 
   return result;
 };
-
-// 사용 예시:
-const answers = [
-  { type: "E/I", answer: "E" },
-  { type: "S/N", answer: "S" },
-  { type: "T/F", answer: "T" },
-  { type: "J/P", answer: "J" },
-  // 추가 질문들...
-];
