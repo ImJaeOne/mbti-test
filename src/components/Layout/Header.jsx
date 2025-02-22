@@ -10,11 +10,13 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    if (!accessToken || expiresIn <= 0) return;
+    if (!expiresIn) {
+      setExpiresIn(expiresInTime);
+    }
 
     const interval = setInterval(() => {
       setExpiresIn((prev) => {
-        if (prev <= 1) {
+        if (prev <= 0) {
           clearInterval(interval);
           return 0;
         }
@@ -23,11 +25,13 @@ const Header = () => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [accessToken, expiresIn]);
+  }, [accessToken]);
 
   useEffect(() => {
-    setExpiresIn(expiresInTime);
-  }, [expiresInTime]);
+    if (expiresIn !== expiresInTime) {
+      setExpiresInTime(expiresIn);
+    }
+  }, [expiresIn]);
 
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);

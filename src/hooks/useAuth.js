@@ -12,15 +12,15 @@ const useAuth = () => {
         const user = await authValidation(accessToken);
         return user;
       } catch (error) {
-        logout();
         alert("토큰이 만료되었습니다. 다시 로그인 해주세요.");
+        logout();
         return null;
       }
     },
     staleTime: 1000 * expiresInTime,
-    refetchInterval: 1000 * expiresInTime,
+    refetchInterval: 900 * expiresInTime,
     retry: 1,
-    enabled: !!accessToken, // 액세스 토큰이 존재할 때만 시도
+    enabled: !!accessToken,
   });
 
   return { user, error };
