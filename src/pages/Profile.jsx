@@ -33,7 +33,7 @@ const Login = () => {
         accessToken: accessToken,
       });
       if (result) {
-        setUser({ nickname: result.nickname });
+        setUser({ ...user, nickname: result.nickname });
         alert("프로필이 성공적으로 업데이트 되었습니다.");
       }
       updateUserMutation.mutate({
