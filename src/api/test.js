@@ -14,7 +14,7 @@ export const createTestResult = async ({ userId, nickname, mbti }) => {
     date: new Date().toISOString().split("T")[0],
   };
 
-  const response = await testAxios.post("/api/testResults", newTestResult);
+  const response = await testAxios.post("", newTestResult);
   return response.data;
 };
 
