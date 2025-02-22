@@ -59,7 +59,7 @@ const Test = () => {
     window.Kakao.Share.sendDefault({
       objectType: "feed",
       content: {
-        title: data.result,
+        title: `${user.nickname}의 mbti는${data.result}`,
         description: mbtiDescriptions[data.result],
         imageUrl: user.avatar || "https://via.placeholder.com/300",
         link: {
@@ -112,7 +112,12 @@ const Test = () => {
                   >
                     삭제
                   </button>
-                  <button onClick={handleShare}>카카오톡 공유하기</button>
+                  <button
+                    className="px-3 py-1 text-sm bg-yellow-300 rounded-md hover:bg-red-600 transition"
+                    onClick={handleShare}
+                  >
+                    카카오톡 공유하기
+                  </button>
                 </div>
               </div>
               <h1 className="flex justify-between text-2xl font-bold text-gray-800">
