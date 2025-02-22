@@ -5,7 +5,9 @@ import { Menu, X } from "lucide-react";
 import ExpireTimer from "./ExpireTimer";
 
 const Header = () => {
-  const { accessToken, user, logout } = useAuthStore((state) => state);
+  const accessToken = useAuthStore((state) => state.accessToken);
+  const user = useAuthStore((state) => state.user);
+  const logout = useAuthStore((state) => state.logout);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = () => {
@@ -15,9 +17,7 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 w-full h-20 px-6 flex justify-between items-center bg-red-300 text-white z-50">
-      <div>
-        <Link to="/">홈</Link>
-      </div>
+      <Link to="/">홈</Link>
 
       <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden">
         {menuOpen ? <X size={28} /> : <Menu size={28} />}
@@ -61,4 +61,4 @@ const Header = () => {
   );
 };
 
-export default React.memo(Header);
+export default Header;
