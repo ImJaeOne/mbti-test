@@ -19,7 +19,7 @@ export const createTestResult = async ({ userId, nickname, mbti }) => {
 };
 
 export const updateTestResultVisibility = async ({ id, visibility }) => {
-  const response = await testAxios.patch(`/${id}`, { visibility: false });
+  const response = await testAxios.patch(`/${id}`, { visibility: !visibility });
   return response.data;
 };
 
