@@ -6,10 +6,11 @@ import {
   updateTestResultVisibility,
   updateProfileTestUser,
 } from "../api/test";
+import { TEST_QUERY_KEY } from "../constants/queryKey";
 
 export const useTestResult = (userId) => {
   return useQuery({
-    queryKey: ["testResults", userId],
+    queryKey: [TEST_QUERY_KEY, userId],
     queryFn: async () => {
       try {
         const testResults = await getTestResults();
@@ -25,7 +26,7 @@ export const useTestResult = (userId) => {
 
 export const useTestResults = () => {
   return useQuery({
-    queryKey: ["testResults"],
+    queryKey: [TEST_QUERY_KEY],
     queryFn: async () => {
       try {
         const testResults = await getTestResults();
@@ -44,7 +45,7 @@ export const useCreateTestResult = () => {
   return useMutation({
     mutationFn: createTestResult,
     onSuccess: () => {
-      queryClient.invalidateQueries(["testResults"]);
+      queryClient.invalidateQueries([TEST_QUERY_KEY]);
     },
   });
 };
@@ -55,7 +56,7 @@ export const useToggleTestResult = () => {
   return useMutation({
     mutationFn: updateTestResultVisibility,
     onSuccess: () => {
-      queryClient.invalidateQueries(["testResults"]);
+      queryClient.invalidateQueries([TEST_QUERY_KEY]);
     },
   });
 };
@@ -66,7 +67,7 @@ export const useDeleteTestResult = () => {
   return useMutation({
     mutationFn: deleteTestResult,
     onSuccess: () => {
-      queryClient.invalidateQueries(["testResults"]);
+      queryClient.invalidateQueries([TEST_QUERY_KEY]);
     },
   });
 };
@@ -77,7 +78,7 @@ export const useUpdateProfileTestUser = () => {
   return useMutation({
     mutationFn: updateProfileTestUser,
     onSuccess: () => {
-      queryClient.invalidateQueries(["testResults"]);
+      queryClient.invalidateQueries([TEST_QUERY_KEY]);
     },
   });
 };
