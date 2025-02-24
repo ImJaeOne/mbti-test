@@ -6,12 +6,17 @@ import {
 } from "../../hooks/useTest";
 import useAuthStore from "../../zustand/authStore";
 import TestResultItem from "./TestResultItem";
+import Loading from "../common/Loading";
 
 const TestResultList = () => {
   const user = useAuthStore((state) => state.user);
-  const { data, error } = useTestResults();
+  const { data, isPending } = useTestResults();
   const updateTestMutation = useToggleTestResult();
   const deleteTestMutation = useDeleteTestResult();
+
+  if(isPending){
+    return <Loading/>
+  }
 
   const handleToggle = (id, visibility) => {
     updateTestMutation.mutate({ id, visibility });
