@@ -32,7 +32,7 @@ const Login = () => {
       if (result) {
         const { accessToken, avatar, nickname, userId } = result;
         setUser({ avatar, nickname, userId });
-        setAccessToken(accessToken);
+        setAccessToken(accessToken, expiresInSec);
         setExpiresInTime(expiresInSec);
         alert("로그인이 완료되었습니다. 홈 페이지로 이동합니다.");
         navigate("/");

@@ -1,12 +1,20 @@
 import React, { useEffect } from "react";
 import useAuthStore from "../../zustand/authStore";
-import useAuth from "../../hooks/useAuth";
 import { formatTime } from "../../utils/formatExpiretTime";
+import { authValidation } from "../../api/auth";
 
 const ExpireTimer = () => {
-  useAuth();
+  const {
+    accessToken,
+    expiresInTime,
+    setExpiresInTime,
+    logout,
+    restoreSession,
+  } = useAuthStore();
 
-  const { accessToken, expiresInTime, setExpiresInTime } = useAuthStore();
+  useEffect(() => {
+    restoreSession();
+  }, []);
 
   useEffect(() => {
     if (!expiresInTime) return;
@@ -16,7 +24,16 @@ const ExpireTimer = () => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [accessToken, expiresInTime]);
+  }, [expiresInTime]);
+
+  useEffect(() => {
+    if (expiresInTime === 0) {
+      authValidation(accessToken).catch(() => {
+        alert("토큰이 만료되었습니다. 다시 로그인 해주세요.");
+        logout();
+      });
+    }
+  }, [expiresInTime, accessToken, logout]);
 
   return (
     <span className="text-sm hidden md:block">{formatTime(expiresInTime)}</span>
