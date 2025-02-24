@@ -8,11 +8,15 @@ import useAuthStore from "../zustand/authStore";
 import { useTestResult, useUpdateProfileTestUser } from "../hooks/useTest";
 
 const Login = () => {
-  const { user, accessToken, setUser } = useAuthStore();
+  const user = useAuthStore((state) => state.user);
+  const accessToken = useAuthStore((state) => state.accessToken);
+  const setUser = useAuthStore((state) => state.setUser);
+
   const [inputData, setInputData] = useState({
     avatar: "",
     nickname: user.nickname,
   });
+
   const { data: test } = useTestResult(user.userId);
   const updateUserMutation = useUpdateProfileTestUser();
 
