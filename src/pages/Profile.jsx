@@ -17,7 +17,7 @@ const Login = () => {
     nickname: user.nickname,
   });
 
-  const { data: test } = useTestResult(user.userId);
+  const { data: [test] = [] } = useTestResult(user.userId);
   const updateUserMutation = useUpdateProfileTestUser();
 
   const handleChange = (e) => {
@@ -42,7 +42,7 @@ const Login = () => {
       }
       updateUserMutation.mutate({
         id: test.id,
-        nickname: result.nickname,
+        nickname: inputData.nickname,
       });
     } catch (error) {
       console.error("프로필 업데이트 실패:", error);

@@ -1,9 +1,9 @@
 import { testAxios } from "./axiosInstance";
 
-export const getTestResult = async(userId) => {
+export const getTestResult = async (userId) => {
   const response = await testAxios.get(`?userId=${userId}`);
   return response.data;
-}
+};
 
 export const getTestResults = async () => {
   const response = await testAxios.get();
@@ -34,6 +34,7 @@ export const deleteTestResult = async (id) => {
 };
 
 export const updateProfileTestUser = async ({ id, nickname }) => {
+  console.log(id, nickname);
   const response = await testAxios.patch(`/${id}`, { nickname: nickname });
   return response.data;
 };
