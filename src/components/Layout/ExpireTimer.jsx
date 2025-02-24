@@ -20,20 +20,17 @@ const ExpireTimer = () => {
     if (!expiresInTime) return;
 
     const interval = setInterval(() => {
+      if (expiresInTime === 1) {
+        authValidation(accessToken).catch(() => {
+          alert("토큰이 만료되었습니다. 다시 로그인 해주세요.");
+          logout();
+        });
+      }
       setExpiresInTime(expiresInTime - 1);
     }, 1000);
 
     return () => clearInterval(interval);
   }, [expiresInTime]);
-
-  useEffect(() => {
-    if (expiresInTime === 0) {
-      authValidation(accessToken).catch(() => {
-        alert("토큰이 만료되었습니다. 다시 로그인 해주세요.");
-        logout();
-      });
-    }
-  }, [expiresInTime, accessToken, logout]);
 
   return (
     <span className="text-sm hidden md:block">{formatTime(expiresInTime)}</span>
