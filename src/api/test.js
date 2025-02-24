@@ -34,7 +34,6 @@ export const deleteTestResult = async (id) => {
 };
 
 export const updateProfileTestUser = async ({ id, nickname }) => {
-  console.log(id, nickname);
   const response = await testAxios.patch(`/${id}`, { nickname: nickname });
   return response.data;
 };
