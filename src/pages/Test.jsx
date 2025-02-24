@@ -8,14 +8,12 @@ import {
   useTestResult,
   useToggleTestResult,
 } from "../hooks/useTest";
+import Loading from "../components/common/Loading";
 
 const Test = () => {
   const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
-  const {
-    data: [data],
-    error,
-  } = useTestResult(user.userId);
+  const { data: [data] = [], isPending } = useTestResult(user.userId);
   const createTestMutation = useCreateTestResult();
   const updateTestMutation = useToggleTestResult();
   const deleteTestMutation = useDeleteTestResult();
@@ -35,6 +33,10 @@ const Test = () => {
       }
     );
   };
+
+  if (isPending) {
+    return <Loading />;
+  }
 
   const handleToggle = (id, visibility) => {
     updateTestMutation.mutate({ id, visibility });

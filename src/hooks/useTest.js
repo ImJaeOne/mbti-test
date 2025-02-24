@@ -15,7 +15,7 @@ export const useTestResult = (userId) => {
     queryFn: async () => {
       try {
         const testResults = await getTestResult(userId);
-        return testResults || null;
+        return testResults || [];
       } catch (error) {
         console.error("테스트 결과 불러오는데 문제가 발생했습니다.", error);
         return null;
@@ -31,7 +31,7 @@ export const useTestResults = () => {
     queryFn: async () => {
       try {
         const testResults = await getTestResults();
-        return testResults || null;
+        return testResults || [];
       } catch (error) {
         console.error("테스트 결과 불러오는데 문제가 발생했습니다.", error);
         return null;
