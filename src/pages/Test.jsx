@@ -11,7 +11,7 @@ import {
 
 const Test = () => {
   const navigate = useNavigate();
-  const { user } = useAuthStore();
+  const  user  = useAuthStore((state) => state.user);
   const { data, error } = useTestResult(user.userId);
   const createTestMutation = useCreateTestResult();
   const updateTestMutation = useToggleTestResult();
