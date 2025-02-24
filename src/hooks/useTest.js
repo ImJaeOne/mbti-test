@@ -5,6 +5,7 @@ import {
   getTestResults,
   updateTestResultVisibility,
   updateProfileTestUser,
+  getTestResult,
 } from "../api/test";
 import { TEST_QUERY_KEY } from "../constants/queryKey";
 
@@ -13,8 +14,8 @@ export const useTestResult = (userId) => {
     queryKey: [TEST_QUERY_KEY, userId],
     queryFn: async () => {
       try {
-        const testResults = await getTestResults();
-        return testResults.find((result) => result.userId === userId) || null;
+        const testResults = await getTestResult(userId);
+        return testResults || null;
       } catch (error) {
         console.error("테스트 결과 불러오는데 문제가 발생했습니다.", error);
         return null;

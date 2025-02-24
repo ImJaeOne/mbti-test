@@ -1,5 +1,10 @@
 import { testAxios } from "./axiosInstance";
 
+export const getTestResult = async(userId) => {
+  const response = await testAxios.get(`?userId=${userId}`);
+  return response.data;
+}
+
 export const getTestResults = async () => {
   const response = await testAxios.get();
   return response.data;
