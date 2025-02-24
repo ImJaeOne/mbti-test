@@ -6,6 +6,7 @@ import CommonBtn from "../components/common/CommonBtn";
 import { Link, useNavigate } from "react-router-dom";
 import { authLogin } from "../api/auth";
 import useAuthStore from "../zustand/authStore";
+import { getTokenExpiration } from "../utils/jwtDecode";
 
 const Login = () => {
   const { setUser, setAccessToken, setExpiresInTime } = useAuthStore(
@@ -28,12 +29,13 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { result, expiresInSec } = await authLogin(inputData);
+      const result = await authLogin(inputData);
       if (result) {
         const { accessToken, avatar, nickname, userId } = result;
+        const expiresInTime = getTokenExpiration(accessToken);
         setUser({ avatar, nickname, userId });
-        setAccessToken(accessToken, expiresInSec);
-        setExpiresInTime(expiresInSec);
+        setAccessToken(accessToken, expiresInTime);
+        setExpiresInTime(expiresInTime);
         alert("로그인이 완료되었습니다. 홈 페이지로 이동합니다.");
         navigate("/");
       }

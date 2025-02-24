@@ -11,7 +11,7 @@ export const authRegister = async (userData) => {
   }
 };
 
-const expiresInSec = 10 * 60;
+const expiresInSec = 10;
 
 export const authLogin = async (userData) => {
   try {
@@ -19,7 +19,7 @@ export const authLogin = async (userData) => {
       `/login?expiresIn=${expiresInSec}s`,
       userData
     );
-    return { result: response.data, expiresInSec };
+    return response.data;
   } catch (error) {
     console.error(error);
     console.error("로그인 실패:", error.response.data.message);
@@ -37,7 +37,7 @@ export const authValidation = async (accessToken) => {
     });
     return response.data;
   } catch (error) {
-    console.error("토큰 만료:", error.response.data.message);
+    console.error("토큰 만료:", error.response.data?.message);
     throw error;
   }
 };
