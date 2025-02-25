@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getTestResult } from "../../services/testResults";
-import { mbtiDescriptions } from "../../utils/mbtiCalculator";
+import { getTestResult } from "../api/test";
+import { mbtiDescriptions } from "../utils/mbtiCalculator";
 
 const KakoTest = () => {
   const { id } = useParams();
