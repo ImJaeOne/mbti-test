@@ -1,7 +1,7 @@
 import { testAxios } from "./axiosInstance";
 
 export const getTestResult = async (userId) => {
-  const response = await testAxios.get(`?userId=${userId}`);
+  const response = await testAxios.get(`/testResults?userId=${userId}`);
   return response.data;
 };
 
