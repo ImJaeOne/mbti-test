@@ -21,7 +21,6 @@ const ExpireTimer = () => {
     queryKey: ["authValidation", accessToken],
     queryFn: async () => {
       try {
-        console.log('sssss');
         return await authValidation(accessToken);
       } catch (error) {
         alert("토큰이 만료되었습니다. 다시 로그인 해주세요.");
