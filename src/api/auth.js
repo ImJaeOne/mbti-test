@@ -11,14 +11,9 @@ export const authRegister = async (userData) => {
   }
 };
 
-const expiresInSec = 10;
-
 export const authLogin = async (userData) => {
   try {
-    const response = await authAxios.post(
-      `/login?expiresIn=${expiresInSec}s`,
-      userData
-    );
+    const response = await authAxios.post(`/login`, userData);
     return response.data;
   } catch (error) {
     console.error(error);
