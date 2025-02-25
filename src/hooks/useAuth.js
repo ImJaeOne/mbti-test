@@ -3,7 +3,7 @@ import { authValidation } from "../api/auth";
 import useAuthStore from "../zustand/authStore";
 
 export const useAuthValidation = (accessToken, expiresInTime) => {
-  const { logout } = useAuthStore((state) => state.logout);
+  const { logout } = useAuthStore((state) => state);
   const { data } = useQuery({
     queryKey: ["authValidation", accessToken],
     queryFn: async () => {
@@ -18,8 +18,7 @@ export const useAuthValidation = (accessToken, expiresInTime) => {
     enabled: !!accessToken,
     staleTime: expiresInTime * 1000,
     refetchOnWindowFocus: true,
-    refetchInterval:
-      expiresInTime < 10 ? 1000 : Math.max(expiresInTime * 500, 5000),
+    refetchInterval: expiresInTime < 1 && 1000,
   });
 
   return data;
