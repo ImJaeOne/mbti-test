@@ -40,10 +40,12 @@ const Login = () => {
         setUser({ ...user, nickname: result.nickname });
         alert("프로필이 성공적으로 업데이트 되었습니다.");
       }
-      updateUserMutation.mutate({
-        id: test.id,
-        nickname: inputData.nickname,
-      });
+      if (test) {
+        updateUserMutation.mutate({
+          id: test.id,
+          nickname: inputData.nickname,
+        });
+      }
     } catch (error) {
       console.error("프로필 업데이트 실패:", error);
       alert("프로필 업데이트에 실패하였습니다.");
