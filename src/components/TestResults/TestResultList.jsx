@@ -14,8 +14,8 @@ const TestResultList = () => {
   const updateTestMutation = useToggleTestResult();
   const deleteTestMutation = useDeleteTestResult();
 
-  if(isPending){
-    return <Loading/>
+  if (isPending) {
+    return <Loading />;
   }
 
   const handleToggle = (id, visibility) => {
@@ -34,8 +34,8 @@ const TestResultList = () => {
         {results?.map((result) => (
           <TestResultItem
             key={result.id}
-            isOwner={user.userId === result.userId}
-            result={result}
+            user={user}
+            data={result}
             handleToggle={handleToggle}
             handleDelete={handleDelete}
           />
