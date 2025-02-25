@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getTestResult } from "../api/test";
 import { mbtiDescriptions } from "../utils/mbtiCalculator";
+import Loading from "../components/common/Loading";
 
 const KakoTest = () => {
   const { id } = useParams();
