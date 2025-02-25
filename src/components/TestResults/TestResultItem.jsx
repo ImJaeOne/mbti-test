@@ -2,8 +2,9 @@ import React from "react";
 import { mbtiDescriptions } from "../../utils/mbtiCalculator";
 
 const TestResultItem = ({ user, data, handleToggle, handleDelete }) => {
+  console.log(data.id);
   const isOwner = user.userId === data.userId;
-  const handleShare = (user, result) => {
+  const handleShare = (user, data) => {
     if (!window.Kakao) {
       console.error("Kakao SDK가 로드되지 않았습니다.");
       return;
@@ -17,22 +18,20 @@ const TestResultItem = ({ user, data, handleToggle, handleDelete }) => {
     window.Kakao.Share.sendDefault({
       objectType: "feed",
       content: {
-        title: `${user.nickname}의 mbti는${result.result}`,
-        description: mbtiDescriptions[result.result],
+        title: `${user.nickname}의 mbti는${data.result}`,
+        description: mbtiDescriptions[data.result],
         imageUrl: user.avatar || "https://via.placeholder.com/300",
         link: {
-          mobileWebUrl: `${import.meta.env.VITE_MBTI_URL}/result/${result.id}`,
-          webUrl: `${import.meta.env.VITE_MBTI_URL}/result/${result.id}`,
+          mobileWebUrl: `${import.meta.env.VITE_MBTI_URL}/result/${data.id}`,
+          webUrl: `${import.meta.env.VITE_MBTI_URL}/result/${data.id}`,
         },
       },
       buttons: [
         {
           title: "결과 보기",
           link: {
-            mobileWebUrl: `${import.meta.env.VITE_MBTI_URL}/result/${
-              result.id
-            }`,
-            webUrl: `${import.meta.env.VITE_MBTI_URL}/result/${result.id}`,
+            mobileWebUrl: `${import.meta.env.VITE_MBTI_URL}/result/${data.id}`,
+            webUrl: `${import.meta.env.VITE_MBTI_URL}/result/${data.id}`,
           },
         },
       ],

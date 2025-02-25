@@ -5,6 +5,11 @@ export const getTestResult = async (userId) => {
   return response.data;
 };
 
+export const getTestResultById = async (id) => {
+  const response = await testAxios.get(`/testResults/${id}`);
+  return response.data;
+};
+
 export const getTestResults = async () => {
   const response = await testAxios.get("/testResults");
   return response.data;
