@@ -2,7 +2,6 @@ import React from "react";
 import { mbtiDescriptions } from "../../utils/mbtiCalculator";
 
 const TestResultItem = ({ user, data, handleToggle, handleDelete }) => {
-  console.log(data.id);
   const isOwner = user.userId === data.userId;
   const handleShare = (user, data) => {
     if (!window.Kakao) {
