@@ -21,16 +21,18 @@ const TestResultItem = ({ user, data, handleToggle, handleDelete }) => {
         description: mbtiDescriptions[result.result],
         imageUrl: user.avatar || "https://via.placeholder.com/300",
         link: {
-          mobileWebUrl: import.meta.env.VITE_MBTI_URL,
-          webUrl: import.meta.env.VITE_MBTI_URL,
+          mobileWebUrl: `${import.meta.env.VITE_MBTI_URL}/result/${result.id}`,
+          webUrl: `${import.meta.env.VITE_MBTI_URL}/result/${result.id}`,
         },
       },
       buttons: [
         {
-          title: "웹으로 보기",
+          title: "결과 보기",
           link: {
-            mobileWebUrl: import.meta.env.VITE_MBTI_URL,
-            webUrl: import.meta.env.VITE_MBTI_URL,
+            mobileWebUrl: `${import.meta.env.VITE_MBTI_URL}/result/${
+              result.id
+            }`,
+            webUrl: `${import.meta.env.VITE_MBTI_URL}/result/${result.id}`,
           },
         },
       ],

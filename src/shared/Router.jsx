@@ -8,6 +8,7 @@ import TestResult from "../pages/TestResult";
 import Test from "../pages/Test";
 import Layout from "../components/Layout/Layout";
 import ProtectedRoute from "./ProtectedRoute";
+import KakaoTest from "../pages/KakaoTest";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <Signup />,
+      },
+      {
+        path: "/result/:id",
+        element: <KakaoTest />,
       },
       {
         element: <ProtectedRoute />,
