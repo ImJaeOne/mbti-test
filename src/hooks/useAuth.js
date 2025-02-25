@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { authValidation } from "../api/auth";
 import useAuthStore from "../zustand/authStore";
+import { AUTH_QUERY_KEY } from "../constants/queryKey";
 
 export const useAuthValidation = (accessToken, expiresInTime) => {
   const { logout } = useAuthStore((state) => state);
   const { data } = useQuery({
-    queryKey: ["authValidation", accessToken],
+    queryKey: [AUTH_QUERY_KEY, accessToken],
     queryFn: async () => {
       try {
         return await authValidation(accessToken);
