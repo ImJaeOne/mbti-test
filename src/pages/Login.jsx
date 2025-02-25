@@ -3,7 +3,7 @@ import SignContainer from "../components/Sign/SignContainer";
 import SignInput from "../components/Sign/SignInput";
 import SignInputWrapper from "../components/Sign/SignInputWrapper";
 import CommonBtn from "../components/common/CommonBtn";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { authLogin } from "../api/auth";
 import useAuthStore from "../zustand/authStore";
 import { getTokenExpiration } from "../utils/jwtDecode";
@@ -12,6 +12,8 @@ const Login = () => {
   const { setUser, setAccessToken, setExpiresInTime } = useAuthStore(
     (state) => state
   );
+  const { state } = useLocation();
+
   const navigate = useNavigate();
   const [inputData, setInputData] = useState({
     id: "",
@@ -36,8 +38,12 @@ const Login = () => {
         setUser({ avatar, nickname, userId });
         setAccessToken(accessToken, expiresInTime);
         setExpiresInTime(expiresInTime);
-        alert("로그인이 완료되었습니다. 홈 페이지로 이동합니다.");
-        navigate("/");
+        alert("로그인이 완료되었습니다.");
+        if (state) {
+          navigate(state.redirectedFrom);
+        } else {
+          navigate("/");
+        }
       }
     } catch (error) {
       console.error("로그인 실패:", error);
